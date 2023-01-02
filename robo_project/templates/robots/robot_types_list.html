@@ -1,0 +1,113 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header contact-header inner-header">
+        <div class="container">
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="../common/index.html">Home</a></li>
+                        <li class="active">Robots types list</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+    <section class="robots list">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase mb-0">Robots types list</h5><br/>
+                        </div>
+                        <div class="text-center mt20 col-sm-12">
+                            {% if perms.robots.add_robottypes  %}
+                                <a href="{% url 'add robot type' %}"><button>Add robot type!</button></a>
+                            {% endif %}
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table no-wrap user-table mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="border-0 text-uppercase font-medium pl-4">PK</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Type name</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Description</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Image URL</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for rtype in object_list %}
+                                    <tr>
+                                        <td class="pl-4">{{ rtype.pk }}</td>
+                                        <td>
+                                            <h5 class="font-medium mb-0">{{ rtype.name }}</h5>
+                                            <span class="text-muted"></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">{{ rtype.description }}</span><br>
+                                            <span class="text-muted"></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">{{ rtype.image_url }}</span><br>
+                                            <span class="text-muted"></span>
+                                        </td>
+                                        <td>
+                                            {% if perms.robots.change_robottypes  %}
+                                                <a href="{% url 'robot types edit' pk=rtype.pk %}">
+                                                    <button>Edit</button>
+                                                </a>
+                                            {% endif %}
+                                            {% if perms.robots.delete_robottypes  %}
+                                                <button onclick="location.href='{% url 'robot types delete' pk=rtype.pk %}'">
+                                                    Delete
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <nav>
+                            <ul class="pager">
+                                {% if page_obj.has_previous %}
+                                    <li class="previous "><a href="?page={{ page_obj.previous_page_number }}"><span
+                                            aria-hidden="true" class="ion-chevron-left"></span></a>
+                                    </li>
+                                {% else %}
+                                    <li class="previous disabled"><a href="#"><span aria-hidden="true"
+                                                                                    class="ion-chevron-left"></span></a>
+                                    </li>
+                                {% endif %}
+
+                                {% for page in page_obj.paginator.page_range %}
+                                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="next"><a href="?page={{ page_obj.next_page_number }}"><span
+                                            aria-hidden="true"
+                                            class="ion-chevron-right"></span></a>
+                                    </li>
+                                {% else %}
+                                    <li class="next disabled"><a href="#"><span aria-hidden="true"
+                                                                                class="ion-chevron-right"></span></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

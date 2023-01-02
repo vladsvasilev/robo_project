@@ -1,0 +1,137 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header contact-header inner-header">
+        <div class="container">
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="../common/index.html">Home</a></li>
+                        <li class="active">Users List</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+    <section class="shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase mb-0">Users list</h5><br/>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table no-wrap user-table mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="border-0 text-uppercase font-medium pl-4">PK</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Name</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Address</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Added</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Owned robots</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Category</th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in object_list %}
+                                    <tr>
+                                        <td class="pl-4">{{ user.pk }}</td>
+                                        <td>
+                                            <h5 class="font-medium mb-0">{{ user }}</h5>
+                                            <span class="text-muted">{{ user.city }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">{{ user.address }}</span><br>
+                                            <span class="text-muted">City: {{ user.city }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">{{ user.email }}</span><br>
+                                            <span class="text-muted"></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">{{ user.date_joined }}</span><br>
+                                            <span class="text-muted"></span>
+                                        </td>
+                                        <td>
+                                            {% for robot in my_robots %}
+                                                {% if robot.user.pk == user.pk %}
+                                                    <span class="text-muted">{{  robot.robot_name }}</span><br>
+                                                    <span class="text-muted"></span>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        </td>
+                                        <td>
+                                            <select class="form-control category-select" id="exampleFormControlSelect1">
+                                                {% if user.is_superuser %}
+                                                    <option>Admin</option>
+                                                {% elif user.is_staff %}
+                                                    <option>Staff</option>
+                                                {% else %}
+                                                    <option>User</option>
+                                                {% endif %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            {% if perms.accounts.change_appuser %}
+                                                <a href="{% url 'profile edit' pk=user.pk %}">
+                                                    <button>Edit</button>
+                                            </a>
+                                            {% endif %}
+                                            {% if perms.accounts.delete_appuser %}
+                                                <button onclick="location.href='{% url 'profile delete' pk=user.pk %}'">
+                                                    Delete
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <nav>
+                            <ul class="pager">
+                                {% if page_obj.has_previous %}
+                                    <li class="previous "><a href="?page={{ page_obj.previous_page_number }}"><span
+                                            aria-hidden="true" class="ion-chevron-left"></span></a>
+                                    </li>
+                                {% else %}
+                                    <li class="previous disabled"><a href="#"><span aria-hidden="true"
+                                                                                    class="ion-chevron-left"></span></a>
+                                    </li>
+                                {% endif %}
+
+                                {% for page in page_obj.paginator.page_range %}
+                                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="next"><a href="?page={{ page_obj.next_page_number }}"><span
+                                            aria-hidden="true"
+                                            class="ion-chevron-right"></span></a>
+                                    </li>
+                                {% else %}
+                                    <li class="next disabled"><a href="#"><span aria-hidden="true"
+                                                                                class="ion-chevron-right"></span></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+{% endblock %}

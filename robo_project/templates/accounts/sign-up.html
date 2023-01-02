@@ -1,0 +1,87 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header contact-header inner-header">
+        <div class="container">
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="../common/index.html">Home</a></li>
+                        <li class="active">Sign In</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+    <section class="sign-up">
+        <div class="container page-bgc">
+            <div class="row">
+                <div class="boxed">
+                    <div class="col-sm-8">
+                        <h4>Sign up details</h4><br/>
+                        <form action="{% url 'sign up' %}" method="post">
+                            <div class="row">
+                            <div>
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <div>
+                                                <a style="color: #c9302c">{{ error|escape }}</a>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% for error in form.non_field_errors %}
+                                        <div>
+                                            <a style="color: #c9302c">{{ error|escape }}</a>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                                {{ form.email.label }}
+                                {{ form.error }}
+                                {{ form.email }}<br/>
+                                {{ form.password1.label }}
+                                {{ form.password1.error }}
+                                {{ form.password1 }}<br/><br/>
+                                {{ form.password2.label }}
+                                {{ form.password2.error }}
+                                {{ form.password2  }}<br/><br/>
+                                {{ form.first_name.label }}
+                                {{ form.first_name.error }}
+                                {{ form.first_name }}<br/>
+                                {{ form.last_name.label }}
+                                {{ form.last_name }}<br/>
+                                {{ form.city.label }}
+                                {{ form.city }}<br/>
+                                {{ form.address.label }}
+                                {{ form.address }}<br/>
+
+                                <div class="text-center mt20 col-sm-12">
+
+                                    <button type="submit" class="add-btn" id="submit" value="submit">Sign up!
+                                    </button>
+
+                                    {% csrf_token %}
+                                </div>
+
+                            </div>
+
+                        </form>
+                        <br/><br/>
+                        <p>If you have an account, please use the button below!</p>
+                        <a href="{% url 'sign in' %}">
+                            <button>Sign in!</button></a>
+                        <div id="contactFormResponse"></div>
+                    </div> <!-- /.col-sm-8 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

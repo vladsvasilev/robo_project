@@ -1,0 +1,100 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header contact-header inner-header">
+        <div class="container">
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">Contact Messages</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase mb-0">Contact Messages</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table no-wrap user-table mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="border-0 text-uppercase font-medium pl-4">PK</th>
+                                <th scope="col" class="border-0 text-uppercase font-medium">Name</th>
+                                <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
+                                <th scope="col" class="border-0 text-uppercase font-medium">Message</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for message in object_list %}
+                                <tr>
+                                <td class="pl-4">{{ message.pk }}</td>
+                                <td>
+                                    <h5 class="font-medium mb-0">{{ message.first_name }} </h5>
+                                    <span class="text-muted">{{ message.last_name }}</span>
+                                </td>
+                                <td>
+                                    <span class="text-muted">{{ message.email }}</span><br>
+                                    <span class="text-muted"></span>
+                                </td>
+                                <td>
+                                    <span class="text-muted">{{ message.message }}</span><br>
+                                    <span class="text-muted"></span>
+                                </td>
+                                <td>
+                                    {% if perms.robot_factory.delete_appmassages  %}
+                                           <button onclick="location.href='{% url 'delete messages' pk=message.pk %}'">
+                                               Delete
+                                           </button>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+            <nav>
+                <ul class="pager">
+                    {% if page_obj.has_previous %}
+                        <li class="previous "><a href="?page={{ page_obj.previous_page_number }}"><span
+                                aria-hidden="true" class="ion-chevron-left"></span></a>
+                        </li>
+                    {% else %}
+                        <li class="previous disabled"><a href="#"><span aria-hidden="true"
+                                                                        class="ion-chevron-left"></span></a>
+                        </li>
+                    {% endif %}
+
+                    {% for page in page_obj.paginator.page_range %}
+                        <li><a href="?page={{ page }}">{{ page }}</a></li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="next"><a href="?page={{ page_obj.next_page_number }}"><span aria-hidden="true"
+                                                                                               class="ion-chevron-right"></span></a>
+                        </li>
+                    {% else %}
+                        <li class="next disabled"><a href="#"><span aria-hidden="true"
+                                                                    class="ion-chevron-right"></span></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'common/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header shop-header inner-header">
+        <div class="container">
+
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">Opps!!! Page Not Found</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+    <!-- Shop -->
+    <section class="page not found">
+        <div class="container page-bgc">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="title-box">
+                        <p>Sorry!!!</p>
+                        <p>The page you are looking for can't be found!!!</p>
+                        <h2 class="title mt0">404 Not found</h2>
+                        <h2 class="title mt0">Please go to home page</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

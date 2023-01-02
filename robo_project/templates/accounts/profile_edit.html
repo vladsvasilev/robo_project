@@ -1,0 +1,79 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header contact-header inner-header">
+        <div class="container">
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="../common/index.html">Home</a></li>
+                        <li class="active">Profile edit</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+    <section class="profile edit">
+        <div class="container page-bgc">
+            <div class="row">
+                <div class="boxed">
+                    <div class="col-sm-8">
+                        <h4>Profile edit</h4><br/>
+                        <form action="{% url 'profile edit' pk=request.user.pk %}" method="post">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="{{ object.first_name }}"
+                                               name="first_name">
+                                    </div> <!-- /.form-group -->
+                                </div> <!-- /.col-sm-6 -->
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="{{ object.last_name }}"
+                                               name="last_name">
+                                    </div> <!-- /.form-group -->
+                                </div> <!-- /.col-sm-6 -->
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="{{ object.city }}"
+                                               name="city" required>
+                                    </div> <!-- /.form-group -->
+                                </div> <!-- /.col-sm-6 -->
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="{{ object.address }}"
+                                               name="address" required>
+                                    </div> <!-- /.form-group -->
+                                </div> <!-- /.col-sm-6 -->
+
+
+                                <div class="text-center mt20 col-sm-12">
+
+                                    <button type="submit" class="add-btn" id="submit" value="submit">Edit
+                                    </button>
+
+                                    {% csrf_token %}
+                                </div>
+
+                            </div>
+
+                        </form>
+                        <div class="text-center mt20 col-sm-12">
+
+                            <a href="javascript:history.go(-1)">
+                                <button>Back</button>
+                            </a>
+
+                            <div id="contactFormResponse"></div>
+                        </div> <!-- /.col-sm-8 -->
+                    </div>
+                </div>
+            </div>
+    </section>
+
+{% endblock %}

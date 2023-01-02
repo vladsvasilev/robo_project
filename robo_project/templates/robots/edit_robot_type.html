@@ -1,0 +1,32 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header contact-header inner-header">
+        <div class="container">
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="../common/index.html">Home</a></li>
+                        <li class="active">Edit robot type</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+    <div class="add_robot_type">
+        <h2>Edit Robot Type</h2>
+        <form action="{% url 'robot types edit' pk=robot_type.pk%}" method="post">
+            {{ form.as_p }}
+            <button class="add-btn" type="submit">Edit Robot Type</button>
+            {% csrf_token %}
+        </form>
+        <a href="javascript:history.go(-1)"><button>Back</button></a>
+    </div>
+
+
+{% endblock %}

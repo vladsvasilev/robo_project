@@ -1,0 +1,42 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Header -->
+    <section id="header" class="main-header contact-header inner-header">
+        <div class="container">
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="../common/index.html">Home</a></li>
+                        <li class="active">Sign In</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+    <!-- Start Delete Profile Section -->
+    <div class="delete-profile">
+        <h1>
+            Are you sure you want to delete this Robot type?
+        </h1>
+
+        <div class="sure-buttons">
+
+            <form method="post" action="{% url 'robot types delete' pk=robot_type.pk %}">
+                {{ form.as_p }}
+                <button>Yes</button>
+                {% csrf_token %}
+            </form>
+            <a href="{% url 'robot types details' pk=robot_type.pk %}"><button>Go Back</button></a>
+        </div>
+    </div>
+    <!-- End Delete Profile Section -->
+
+{% endblock %}

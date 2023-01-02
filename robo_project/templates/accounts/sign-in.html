@@ -1,0 +1,56 @@
+{% extends 'common/base.html' %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header contact-header inner-header">
+        <div class="container">
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="../common/index.html">Home</a></li>
+                        <li class="active">Sign In</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+    <section class="sign-up">
+        <div class="container page-bgc">
+            <div class="row">
+                <div class="boxed">
+                    <div class="col-sm-8">
+                        <h4>Sign up details</h4><br/>
+                        <form action="{% url 'sign in' %}" method="post">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.as_p }}
+                                    </div> <!-- /.form-group -->
+                                </div> <!-- /.col-sm-6 -->
+
+                                {% csrf_token %}
+
+                                <div class="text-center mt20 col-sm-12">
+                                    <button type="submit" class="add-btn" id="submit" value="submit">Sign in!
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                         <br/>
+                        <div class="text-center mt20 col-sm-12">
+                                    <p>If you don't have an account, please use the button below!</p>
+                                    <a href="{% url 'sign up' %}"><button>Sign up!</button></a>
+                        </div>
+
+                        <div id="contactFormResponse"></div>
+                    </div> <!-- /.col-sm-8 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

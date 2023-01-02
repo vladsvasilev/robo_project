@@ -1,0 +1,106 @@
+{% extends 'common/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Header -->
+    <section id="header" class="main-header shop-header inner-header">
+        <div class="container">
+
+            {% include 'partials/nav.html' %}
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">Shop</li>
+                    </ol>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+    <!-- Shop -->
+    <section class="shop">
+        <div class="container page-bgc">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="title-box">
+                        <p>Get our</p>
+                        <h2 class="title mt0">Robots</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="boxed">
+                    {% for robot in object_list %}
+                        <div class="col-sm-6">
+                        <div class="shop-box">
+                            <img class="img-thumbnail" style="max-height: 250px"   src="{{ robot.image_url }}" alt="shop">
+                        </div>
+                        <div class="shop-box-title">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Type: {{ robot.type }}</h4>
+                                    <h4>Name: <span class="thin"> {{ robot.robot_name }}</span></h4>
+                                    <h4>Description:  <span class="thin"> {{ robot.description }}</span></h4>
+
+                                    <form action="{% url 'add user robots' pk=request.user.pk %}" method="post">
+                                        <input type="hidden" class="form-control"  name="user" value="{{ request.user.pk }}">
+                                        <input type="hidden" class="form-control"  name="robot_name" value="{{ robot.pk }}">
+                                        <input type="hidden" class="form-control"  name="user_robots_quantity" value="1">
+                                        <button class="add-btn" type="submit">Add User Robot</button>
+                                        {% csrf_token %}
+                                    </form>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="shop-price">
+                                        Qty: {{ robot.available_quantity }}
+                                    </p>
+
+                                    <div class="star">
+                                        <span class="ion-ios-star"></span>
+                                        <span class="ion-ios-star"></span>
+                                        <span class="ion-ios-star"></span>
+                                        <span class="ion-ios-star-half"></span>
+                                        <span class="ion-ios-star-outline"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="col-sm-12">
+                        <nav>
+                            <ul class="pager">
+                                {% if page_obj.has_previous %}
+                                    <li class="previous "><a href="?page={{ page_obj.previous_page_number }}"><span
+                                            aria-hidden="true" class="ion-chevron-left"></span></a>
+                                    </li>
+                                {% else %}
+                                    <li class="previous disabled"><a href="#"><span aria-hidden="true"
+                                                                                    class="ion-chevron-left"></span></a>
+                                    </li>
+                                {% endif %}
+
+                                {% for page in page_obj.paginator.page_range %}
+                                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="next"><a href="?page={{ page_obj.next_page_number }}"><span
+                                            aria-hidden="true"
+                                            class="ion-chevron-right"></span></a>
+                                    </li>
+                                {% else %}
+                                    <li class="next disabled"><a href="#"><span aria-hidden="true"
+                                                                                class="ion-chevron-right"></span></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
